@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Chatbot Dashboard - Ultra Clean Car Wash</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="logo.png">
+    
+    <!-- Theme color for Android -->
+    <meta name="theme-color" content="#4f46e5">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles - Mobile First Approach -->
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-dark: #3730a3;
+            --secondary-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --light-color: #f9fafb;
+            --dark-color: #111827;
+            --gray-color: #6b7280;
+            --border-color: #e5e7eb;
+            --whatsapp-color: #25d366;
+            
+            /* Mobile-friendly sizing */
+            --header-font-size: 1.5rem;
+            --normal-font-size: 1rem;
+            --small-font-size: 0.9rem;
+            --touch-target-size: 48px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background-color: #f3f4f6;
+            color: var(--dark-color);
+            line-height: 1.5;
+            font-size: var(--normal-font-size);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+        
+        /* Better touch scrolling */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 12px;
+            height: 100vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Header Styles - Mobile optimized */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .logo span {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            display: block;
+        }
+        
+        /* Mobile Menu Toggle - Bigger touch target */
+        .mobile-menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.75rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            transition: background 0.3s ease;
+            min-width: var(--touch-target-size);
+            min-height: var(--touch-target-size);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .mobile-menu-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .mobile-menu-toggle:active {
+            transform: scale(0.95);
+        }
+        
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            backdrop-filter: blur(3px);
+        }
+        
+        .mobile-menu-overlay.active {
+            display: block;
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            transition: left 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            left: 0;
+        }
+        
+        .mobile-menu-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .mobile-menu-header i {
+            font-size: 2rem;
+        }
+        
+        .mobile-menu-header h3 {
+            font-size: 1.2rem;
+        }
+        
+        .mobile-menu-items {
+            padding: 1rem 0;
+        }
+        
+        .mobile-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border-left: 3px solid transparent;
+            min-height: var(--touch-target-size);
+            font-size: 1.1rem;
+        }
+        
+        .mobile-menu-item:hover {
+            background: #f9fafb;
+        }
+        
+        .mobile-menu-item:active {
+            background: #f3f4f6;
+        }
+        
+        .mobile-menu-item.active {
+            background: rgba(79, 70, 229, 0.05);
+            border-left-color: var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .mobile-menu-item i {
+            width: 24px;
+            color: var(--gray-color);
+            font-size: 1.2rem;
+        }
+        
+        .mobile-menu-item.active i {
+            color: var(--primary-color);
+        }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            min-width: var(--touch-target-size);
+            min-height: var(--touch-target-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .mobile-menu-close:active {
+            transform: scale(0.95);
+        }
+        
+        /* Navigation Tabs - Desktop only */
+        .nav-tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1rem;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            white-space: nowrap;
+        }
+        
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .nav-tab {
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: var(--gray-color);
+            border-bottom: 3px solid transparent;
+            font-size: 0.95rem;
+            min-width: fit-content;
+            flex-shrink: 0;
+            min-height: var(--touch-target-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-tab:hover {
+            background-color: #f9fafb;
+            color: var(--primary-color);
+        }
+        
+        .nav-tab:active {
+            background-color: #f3f4f6;
+        }
+        
+        .nav-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+            background-color: rgba(79, 70, 229, 0.05);
+        }
+        
+        .nav-tab i {
+            margin-right: 6px;
+            font-size: 1rem;
+        }
+        
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Dashboard Cards - Clickable */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        @media (min-width: 480px) {
+            .dashboard-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .dashboard-stats {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 90px;
+            border: 2px solid transparent;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+        
+        .stat-card:active {
+            transform: scale(0.98);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        
+        .stat-icon.catalog { background: #e0e7ff; color: var(--primary-color); }
+        .stat-icon.chats { background: #dcfce7; color: var(--secondary-color); }
+        .stat-icon.faq { background: #fef3c7; color: var(--warning-color); }
+        .stat-icon.orders { background: #fee2e2; color: var(--danger-color); }
+        
+        .stat-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        
+        .stat-info p {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        /* Action Bar - Mobile optimized */
+        .action-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .action-bar {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+        
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+        
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .btn-group .btn {
+            flex: 1 1 auto;
+        }
+        
+        @media (min-width: 640px) {
+            .btn-group .btn {
+                flex: 0 1 auto;
+            }
+        }
+        
+        .btn {
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            min-height: var(--touch-target-size);
+            width: 100%;
+            border: 1px solid transparent;
+        }
+        
+        @media (min-width: 640px) {
+            .btn {
+                width: auto;
+            }
+        }
+        
+        .btn:active {
+            transform: scale(0.96);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-success {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #0da271;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background-color: #d97706;
+        }
+        
+        .btn-secondary {
+            background-color: var(--gray-color);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #4b5563;
+        }
+        
+        .btn-whatsapp {
+            background-color: var(--whatsapp-color);
+            color: white;
+        }
+        
+        .btn-whatsapp:hover {
+            background-color: #128C7E;
+        }
+        
+        /* Data Tables - Mobile optimized with horizontal scroll */
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            overflow-x: auto;
+            overflow-y: visible;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        @media (max-width: 640px) {
+            table {
+                min-width: 700px;
+            }
+        }
+        
+        th {
+            background-color: #f9fafb;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--dark-color);
+            border-bottom: 2px solid var(--border-color);
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+        
+        tr {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        tr:hover {
+            background-color: #f9fafb;
+        }
+        
+        tr:active {
+            background-color: #f3f4f6;
+        }
+        
+        tr.click-loading {
+            opacity: 0.7;
+            pointer-events: none;
+            position: relative;
+        }
+        
+        tr.click-loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .product-image-preview,
+        .order-image-preview {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            display: block;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .product-image-preview:hover,
+        .order-image-preview:hover {
+            transform: scale(1.1);
+        }
+        
+        .product-image-preview:active,
+        .order-image-preview:active {
+            transform: scale(0.95);
+        }
+        
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            white-space: nowrap;
+        }
+        
+        .status-pending {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-processing {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .status-completed {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            min-height: 40px;
+            transition: all 0.2s ease;
+        }
+        
+        .action-btn:active {
+            transform: scale(0.96);
+        }
+        
+        .edit-btn {
+            background-color: #e0e7ff;
+            color: var(--primary-color);
+        }
+        
+        .delete-btn {
+            background-color: #fee2e2;
+            color: var(--danger-color);
+        }
+        
+        .view-btn {
+            background-color: #d1fae5;
+            color: var(--secondary-color);
+        }
+        
+        .process-btn {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .complete-btn {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .whatsapp-btn {
+            background-color: var(--whatsapp-color);
+            color: white;
+        }
+        
+        /* Modal - Mobile optimized */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: flex-end;
+            justify-content: center;
+            overflow-y: auto;
+        }
+        
+        @media (min-width: 768px) {
+            .modal {
+                align-items: center;
+            }
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px 20px 0 0;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.3s ease;
+        }
+        
+        @media (min-width: 768px) {
+            .modal-content {
+                border-radius: 12px;
+                width: 90%;
+                max-width: 700px;
+                animation: modalFadeIn 0.3s ease;
+            }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            padding: 1.2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+        }
+        
+        .modal-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--gray-color);
+            padding: 0.5rem;
+            min-width: var(--touch-target-size);
+            min-height: var(--touch-target-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-close:active {
+            transform: scale(0.95);
+        }
+        
+        .modal-body {
+            padding: 1.2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            font-size: 1rem;
+        }
+        
+        .form-control, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            min-height: var(--touch-target-size);
+            background: white;
+        }
+        
+        .form-control:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        
+        /* File Upload */
+        .file-upload-container {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: border-color 0.3s ease;
+            cursor: pointer;
+            background: #fafafa;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .file-upload-container:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(79, 70, 229, 0.05);
+        }
+        
+        .file-upload-container:active {
+            transform: scale(0.99);
+        }
+        
+        .file-upload-container.dragover {
+            border-color: var(--primary-color);
+            background-color: rgba(79, 70, 229, 0.1);
+        }
+        
+        .file-upload-icon {
+            font-size: 2.5rem;
+            color: var(--gray-color);
+            margin-bottom: 0.8rem;
+        }
+        
+        .file-upload-text {
+            color: var(--gray-color);
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+        
+        .file-upload-hint {
+            font-size: 0.85rem;
+            color: var(--gray-color);
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .image-preview-container {
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .image-preview {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: block;
+            margin: 0 auto 10px auto;
+        }
+        
+        .upload-progress {
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        /* Chat Thread */
+        .chat-thread {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            background-color: #fafafa;
+            margin-bottom: 1rem;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .chat-message {
+            margin-bottom: 1rem;
+            display: flex;
+        }
+        
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+        
+        .chat-message.bot {
+            justify-content: flex-start;
+        }
+        
+        .chat-bubble {
+            max-width: 85%;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            position: relative;
+            word-wrap: break-word;
+            font-size: 0.95rem;
+        }
+        
+        .chat-message.user .chat-bubble {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .chat-message.bot .chat-bubble {
+            background-color: white;
+            color: var(--dark-color);
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 4px;
+        }
+        
+        .chat-time {
+            font-size: 0.7rem;
+            color: var(--gray-color);
+            margin-top: 4px;
+            text-align: right;
+        }
+        
+        .chat-message.user .chat-time {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Order Details */
+        .order-details {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .order-details {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+        
+        .order-image-large {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        
+        .order-image-large img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .order-info-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        .order-info-label {
+            font-weight: 600;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .order-info-value {
+            font-size: 1.1rem;
+            color: var(--dark-color);
+            word-break: break-word;
+        }
+        
+        .order-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 1.2rem;
+        }
+        
+        @media (min-width: 480px) {
+            .order-actions {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+        
+        .order-whatsapp-preview {
+            background-color: #dcf8c6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #25d366;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            word-break: break-word;
+            font-size: 0.95rem;
+        }
+        
+        /* WhatsApp Follow-up Section */
+        .whatsapp-followup {
+            margin-top: 1.2rem;
+            padding: 1rem;
+            background-color: #f0fff4;
+            border-radius: 8px;
+            border-left: 4px solid var(--whatsapp-color);
+        }
+        
+        .whatsapp-followup h4 {
+            color: #075e54;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .whatsapp-templates {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .whatsapp-template-btn {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 40px;
+            flex: 1 1 auto;
+        }
+        
+        .whatsapp-template-btn:active {
+            transform: scale(0.96);
+        }
+        
+        .whatsapp-template-btn:hover {
+            background-color: var(--whatsapp-color);
+            color: white;
+            border-color: var(--whatsapp-color);
+        }
+        
+        .whatsapp-message-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+        
+        .whatsapp-message-input:focus {
+            outline: none;
+            border-color: var(--whatsapp-color);
+            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+        }
+        
+        /* Loading Spinner */
+        .loading {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            border-radius: 12px;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        /* PWA Install Prompt */
+        .pwa-install {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            text-align: center;
+            display: none;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+            animation: slideDown 0.5s ease;
+        }
+        
+        @media (min-width: 640px) {
+            .pwa-install {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+        }
+        
+        .pwa-install.show {
+            display: flex;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pwa-install-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .pwa-install-icon {
+            font-size: 2rem;
+        }
+        
+        .pwa-install-text h3 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        
+        .pwa-install-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .pwa-install .btn {
+            background-color: white;
+            color: var(--primary-color);
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            width: 100%;
+        }
+        
+        @media (min-width: 640px) {
+            .pwa-install .btn {
+                width: auto;
+            }
+        }
+        
+        .pwa-install .btn:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            z-index: 10000;
+            font-size: 0.95rem;
+            animation: toastSlideUp 0.3s ease;
+        }
+        
+        @media (min-width: 640px) {
+            .toast {
+                bottom: 20px;
+                left: auto;
+                right: 20px;
+                max-width: 400px;
+                animation: toastSlideIn 0.3s ease;
+            }
+        }
+        
+        @keyframes toastSlideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes toastSlideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .toast-success { background: #10b981; }
+        .toast-error { background: #ef4444; }
+        .toast-warning { background: #f59e0b; }
+        .toast-info { background: #3b82f6; }
+        
+        .toast-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+        
+        .toast-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0.3rem;
+            min-width: 40px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .toast-close:active {
+            transform: scale(0.95);
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--gray-color);
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--border-color);
+        }
+        
+        .empty-state p {
+            font-size: 1rem;
+        }
+        
+        /* Mobile menu visibility */
+        @media (max-width: 768px) {
+            .nav-tabs {
+                display: none;
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-menu-toggle {
+                display: none;
+            }
+        }
+        
+        /* Category custom input styling */
+        .category-custom-container {
+            margin-top: 8px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <i class="fas fa-robot"></i>
+            <div>
+                <h3>Ultra Clean Car Wash</h3>
+                <small>Chatbot Dashboard</small>
+            </div>
+            <button class="mobile-menu-close" id="closeMobileMenu">&times;</button>
+        </div>
+        <div class="mobile-menu-items">
+            <div class="mobile-menu-item" data-tab="dashboard"><i class="fas fa-chart-line"></i><span>Dashboard</span></div>
+            <div class="mobile-menu-item" data-tab="catalog"><i class="fas fa-box"></i><span>Catalog</span></div>
+            <div class="mobile-menu-item" data-tab="chats"><i class="fas fa-comments"></i><span>Chats</span></div>
+            <div class="mobile-menu-item" data-tab="faq"><i class="fas fa-question-circle"></i><span>FAQ</span></div>
+            <div class="mobile-menu-item" data-tab="orders"><i class="fas fa-shopping-cart"></i><span>Orders</span></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <div class="mobile-menu-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></div>
+                    <div class="logo-icon"><i class="fas fa-robot"></i></div>
+                    <div><h1>Chatbot Dashboard</h1><span>Ultra Clean Car Wash</span></div>
+                </div>
+                <div><button class="btn btn-secondary" id="refreshBtn"><i class="fas fa-sync-alt"></i> Refresh</button></div>
+            </div>
+        </header>
+        
+        <div class="pwa-install" id="installPrompt">
+            <div class="pwa-install-content"><div class="pwa-install-icon"><i class="fas fa-robot"></i></div><div class="pwa-install-text"><h3>Install Ultra Clean Car Wash Dashboard</h3><p>Install this app on your device for quick access</p></div></div>
+            <button class="btn" id="installBtn">Install Now</button>
+        </div>
+        
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-tab="dashboard"><i class="fas fa-chart-line"></i> Dashboard</div>
+            <div class="nav-tab" data-tab="catalog"><i class="fas fa-box"></i> Catalog</div>
+            <div class="nav-tab" data-tab="chats"><i class="fas fa-comments"></i> Chats</div>
+            <div class="nav-tab" data-tab="faq"><i class="fas fa-question-circle"></i> FAQ</div>
+            <div class="nav-tab" data-tab="orders"><i class="fas fa-shopping-cart"></i> Orders</div>
+        </div>
+        
+        <section id="dashboard" class="content-section active">
+            <h2 class="section-title">Dashboard</h2>
+            <div class="dashboard-stats">
+                <div class="stat-card" data-tab="catalog"><div class="stat-icon catalog"><i class="fas fa-box"></i></div><div class="stat-info"><h3>Catalog Items</h3><p id="catalogCount">0</p></div></div>
+                <div class="stat-card" data-tab="chats"><div class="stat-icon chats"><i class="fas fa-comments"></i></div><div class="stat-info"><h3>Chat Threads</h3><p id="chatsCount">0</p></div></div>
+                <div class="stat-card" data-tab="faq"><div class="stat-icon faq"><i class="fas fa-question-circle"></i></div><div class="stat-info"><h3>FAQ Entries</h3><p id="faqCount">0</p></div></div>
+                <div class="stat-card" data-tab="orders"><div class="stat-icon orders"><i class="fas fa-shopping-cart"></i></div><div class="stat-info"><h3>Pending Orders</h3><p id="ordersCount">0</p></div></div>
+            </div>
+            <div class="data-table"><h3 style="padding: 1rem; margin: 0; font-size: 1.2rem;">Recent Orders</h3>
+                <table><thead><tr><th>Order Number</th><th>Customer Phone</th><th>Date & Time</th><th>Status</th><th>Action</th></tr></thead><tbody id="recentOrders"></tbody></table>
+            </div>
+        </section>
+        
+        <section id="catalog" class="content-section">
+            <div class="action-bar"><h2 class="section-title">Product Catalog</h2><button class="btn btn-primary" id="addProductBtn"><i class="fas fa-plus"></i> Add Product</button></div>
+            <div class="data-table"><table><thead><tr><th>Image</th><th>Product</th><th>SKU</th><th>Price</th><th>Category</th><th>Actions</th></tr></thead><tbody id="catalogTable"></tbody></table></div>
+        </section>
+        
+        <section id="chats" class="content-section">
+            <div class="action-bar"><h2 class="section-title">Chat Conversations</h2><div class="btn-group"><button class="btn btn-secondary" id="exportNumbersBtn"><i class="fas fa-download"></i> Export</button></div></div>
+            <div class="data-table"><table><thead><tr><th>Phone Number</th><th>Last Message</th><th>Messages</th><th>Last Timestamp</th><th>Actions</th></tr></thead><tbody id="chatsTable"></tbody></table></div>
+        </section>
+        
+        <section id="faq" class="content-section">
+            <div class="action-bar"><h2 class="section-title">FAQ Management</h2><button class="btn btn-primary" id="addFaqBtn"><i class="fas fa-plus"></i> Add FAQ</button></div>
+            <div class="data-table"><table><thead><tr><th>Question</th><th>SKU</th><th>Actions</th></tr></thead><tbody id="faqTable"></tbody></table></div>
+        </section>
+        
+        <section id="orders" class="content-section">
+            <div class="action-bar"><h2 class="section-title">Order Management</h2><div class="btn-group"><button class="btn btn-secondary" id="showPendingBtn"><i class="fas fa-hourglass-start"></i> Pending</button><button class="btn btn-warning" id="showProcessingBtn"><i class="fas fa-cog"></i> Processing</button><button class="btn btn-success" id="showCompletedBtn"><i class="fas fa-check-circle"></i> Completed</button></div></div>
+            <div class="data-table"><table><thead><tr><th>Image</th><th>Order Number</th><th>Customer Phone</th><th>Date & Time</th><th>Status</th><th>Actions</th></tr></thead><tbody id="ordersTable"></tbody></table></div>
+        </section>
+    </div>
+    
+    <!-- Product Modal with Category Dropdown + Other -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header"><h3 id="productModalTitle">Add Product</h3><button class="modal-close" id="closeProductModal">&times;</button></div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <input type="hidden" id="productSku" name="sku">
+                    <input type="hidden" id="productImageLink" name="imageLink">
+                    <input type="hidden" id="productFileId" name="fileId">
+                    <div class="form-group"><label for="productName">Product Name *</label><input type="text" id="productName" class="form-control" required></div>
+                    <div class="form-group"><label for="productPrice">Price *</label><input type="number" id="productPrice" class="form-control" step="0.01" required></div>
+                    <div class="form-group"><label for="productSkuInput">SKU (leave blank for auto-generate)</label><input type="text" id="productSkuInput" class="form-control"></div>
+                    <div class="form-group"><label for="productDescription">Description</label><textarea id="productDescription" class="form-control" rows="3"></textarea></div>
+                    
+                    <!-- Category Dropdown with dynamic options -->
+                    <div class="form-group">
+                        <label for="productCategorySelect">Category</label>
+                        <select id="productCategorySelect" class="form-control">
+                            <option value="">-- Select Category --</option>
+                            <option value="other">+ Other (Add New)</option>
+                        </select>
+                    </div>
+                    <div class="form-group category-custom-container" id="categoryCustomContainer">
+                        <label for="productCategoryCustom">New Category Name</label>
+                        <input type="text" id="productCategoryCustom" class="form-control" placeholder="Enter new category...">
+                    </div>
+                    <input type="hidden" id="productCategory" value="">
+                    
+                    <div class="form-group"><label>Product Image *</label>
+                        <div class="file-upload-container" id="fileUploadContainer"><div class="file-upload-icon"><i class="fas fa-cloud-upload-alt"></i></div><div class="file-upload-text">Tap to upload or drag and drop</div><div class="file-upload-hint">PNG, JPG, JPEG up to 5MB</div><input type="file" id="fileInput" class="file-input" accept="image/*"></div>
+                        <div class="image-preview-container" id="imagePreviewContainer"><img id="imagePreview" src="" alt="Preview" class="image-preview"><button type="button" class="btn btn-danger" id="removeImageBtn"><i class="fas fa-trash"></i> Remove Image</button></div>
+                        <div class="upload-progress" id="uploadProgress"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><div style="text-align: center; margin-top: 5px;"><span id="progressText">0%</span></div></div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 1.5rem;"><button type="submit" class="btn btn-primary" style="width: 100%;"><span id="productSubmitText">Add Product</span></button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- FAQ Modal -->
+    <div class="modal" id="faqModal"><div class="modal-content"><div class="modal-header"><h3 id="faqModalTitle">Add FAQ</h3><button class="modal-close" id="closeFaqModal">&times;</button></div><div class="modal-body"><form id="faqForm"><input type="hidden" id="faqSku" name="sku"><div class="form-group"><label for="faqQuestion">Question *</label><textarea id="faqQuestion" class="form-control" rows="3" required></textarea></div><div class="form-group"><label for="faqSkuInput">SKU (leave blank for auto-generate)</label><input type="text" id="faqSkuInput" class="form-control"></div><div class="form-group"><button type="submit" class="btn btn-primary"><span id="faqSubmitText">Add FAQ</span></button></div></form></div></div></div>
+    
+    <!-- Chat Thread Modal -->
+    <div class="modal" id="chatThreadModal"><div class="modal-content"><div class="modal-header"><h3>Chat with <span id="chatPhoneNumber"></span></h3><button class="modal-close" id="closeChatModal">&times;</button></div><div class="modal-body"><div class="chat-thread" id="chatThread"></div><div class="whatsapp-followup"><h4><i class="fab fa-whatsapp"></i> Send WhatsApp Follow-up</h4><div class="whatsapp-templates"><button class="whatsapp-template-btn" data-template="general">General</button><button class="whatsapp-template-btn" data-template="followup">Follow-up</button><button class="whatsapp-template-btn" data-template="feedback">Feedback</button><button class="whatsapp-template-btn" data-template="custom">Custom</button></div><textarea id="whatsappMessage" class="whatsapp-message-input">Hi this is Ultra Clean Car Wash, reaching out based on an enquiry you made on our chatbot. How can we assist you further?</textarea><button class="btn btn-whatsapp" id="sendFollowUpBtn">Send on WhatsApp</button></div></div></div></div>
+    
+    <!-- Order Details Modal -->
+    <div class="modal" id="orderDetailsModal"><div class="modal-content"><div class="modal-header"><h3>Order Details: <span id="orderNumberTitle"></span></h3><button class="modal-close" id="closeOrderModal">&times;</button></div><div class="modal-body"><div class="order-details"><div class="order-image-large"><img id="orderImage" src="" style="display: none;"><div id="noOrderImage" style="padding: 2rem; text-align: center;"><i class="fas fa-image"></i><p>No image available</p></div></div><div><div class="order-info-group"><div class="order-info-label">Order Number</div><div class="order-info-value" id="orderNumberDetail"></div></div><div class="order-info-group"><div class="order-info-label">Customer Phone</div><div class="order-info-value" id="orderPhone"></div></div><div class="order-info-group"><div class="order-info-label">Date & Time</div><div class="order-info-value" id="orderDateTime"></div></div><div class="order-info-group"><div class="order-info-label">Status</div><div class="order-info-value"><span class="status-badge" id="orderStatusBadge"></span></div></div><div class="order-info-group"><div class="order-info-label">Description</div><div class="order-info-value" id="orderDescription"></div></div><div class="whatsapp-followup"><h4><i class="fab fa-whatsapp"></i> Notify Customer on WhatsApp</h4><div class="whatsapp-templates"><button class="whatsapp-template-btn" data-template="processing">Processing</button><button class="whatsapp-template-btn" data-template="ready">Ready</button><button class="whatsapp-template-btn" data-template="delivery">Delivery</button><button class="whatsapp-template-btn" data-template="custom">Custom</button></div><textarea id="orderWhatsappMessage" class="whatsapp-message-input"></textarea><div class="order-actions" id="orderActions"></div><button class="btn btn-whatsapp" id="sendOrderWhatsAppBtn">Send WhatsApp Notification</button></div></div></div></div></div></div>
+    
+<script>
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxLNnFUmPf6sJwPiTcY8B13Tg4sbiEx-ABYC62Lz7ZzW8JVa4mdkAOeqWa49QiNdzALng/exec';
+    const DRIVE_FOLDER_ID = '1PWBXrNY2X5e0D2a2IOnURP41SBjEOcCu';
+    
+    let currentData = { catalog: [], chats: [], faq: [], orders: [], pendingOrders: [], processingOrders: [], completedOrders: [], users: [] };
+    let currentModal = null, currentOrderFilter = 'pending', currentChatPhone = '', currentOrder = null, uploadedImageUrl = '', uploadedFileId = '';
+    let deferredPrompt, categoryList = [];
+    
+    function safeString(v) { return v === null || v === undefined ? '' : String(v).trim(); }
+    function cleanPhoneNumber(phone) { if (!phone) return ''; return String(phone).replace(/[^\d+]/g, ''); }
+    function addRowLoading(row) { row.classList.add('click-loading'); setTimeout(() => row.classList.remove('click-loading'), 1000); }
+    
+    async function fetchCategoriesFromSheet() {
+        try {
+            const res = await fetchData('getCategories');
+            if (res && res.success && Array.isArray(res.data)) return res.data.filter(c => c && c !== '');
+            const catalogRes = await fetchData('getcatalog');
+            if (catalogRes && catalogRes.success && catalogRes.catalog) {
+                const cats = new Set();
+                catalogRes.catalog.forEach(p => { if (p.category && p.category.trim()) cats.add(p.category.trim()); });
+                return Array.from(cats);
+            }
+            return [];
+        } catch(e) { return []; }
+    }
+    
+    async function populateCategoryDropdown() {
+        categoryList = await fetchCategoriesFromSheet();
+        const select = document.getElementById('productCategorySelect');
+        if (!select) return;
+        const currentVal = select.value;
+        select.innerHTML = '<option value="">-- Select Category --</option>';
+        categoryList.forEach(cat => { select.innerHTML += `<option value="${escapeHtml(cat)}">${escapeHtml(cat)}</option>`; });
+        select.innerHTML += '<option value="other">+ Other (Add New)</option>';
+        if (currentVal && currentVal !== 'other' && categoryList.includes(currentVal)) select.value = currentVal;
+        else select.value = '';
+    }
+    
+    function escapeHtml(str) { if(!str) return ''; return String(str).replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    
+    async function fetchData(action, params = {}) {
+        let url = `${WEB_APP_URL}?action=${action}`;
+        Object.keys(params).forEach(k => { if (params[k] !== undefined && params[k] !== null) url += `&${k}=${encodeURIComponent(params[k])}`; });
+        try {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const contentType = res.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) return await res.json();
+            if (contentType && contentType.includes('text/csv')) return { success: true, data: await res.text(), isCSV: true };
+            const text = await res.text();
+            try { return JSON.parse(text); } catch { return { success: false, error: 'Invalid response' }; }
+        } catch(e) { return { success: false, error: e.message }; }
+    }
+    
+    function showToast(msg, type = 'info') {
+        const existing = document.querySelector('.toast');
+        if (existing) existing.remove();
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+        toast.innerHTML = `<div class="toast-content"><i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i><span>${msg}</span></div><button class="toast-close">&times;</button>`;
+        toast.querySelector('.toast-close').addEventListener('click', () => { toast.remove(); });
+        setTimeout(() => { if (document.body.contains(toast)) toast.remove(); }, 5000);
+        document.body.appendChild(toast);
+    }
+    
+    function showLoading(section) { const el = document.getElementById(section); if(!el) return; const existing = el.querySelector('.loading-overlay'); if(existing) existing.remove(); const loader = document.createElement('div'); loader.className = 'loading-overlay'; loader.innerHTML = '<div class="loading-spinner"></div>'; el.appendChild(loader); }
+    function hideLoading(section) { const el = document.getElementById(section); if(!el) return; const loader = el.querySelector('.loading-overlay'); if(loader) loader.remove(); }
+    
+    async function uploadImageToDrive(file, retry = 0) {
+        const progBar = document.getElementById('uploadProgress'), progFill = document.getElementById('progressFill'), progText = document.getElementById('progressText');
+        progBar.style.display = 'block'; progFill.style.width = '0%'; progText.textContent = '0%';
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        return new Promise((resolve, reject) => {
+            reader.onload = async function() {
+                const base64 = reader.result.split(',')[1];
+                try {
+                    const fd = new FormData();
+                    fd.append('action', 'uploadImage');
+                    fd.append('imageData', base64);
+                    fd.append('fileName', file.name);
+                    fd.append('mimeType', file.type);
+                    const response = await fetch(WEB_APP_URL, { method: 'POST', body: fd });
+                    if (!response.ok) throw new Error(`Upload failed: ${response.status}`);
+                    const result = await response.json();
+                    if (result.success) {
+                        uploadedImageUrl = result.data.fileUrl;
+                        uploadedFileId = result.data.fileId;
+                        document.getElementById('productImageLink').value = result.data.fileUrl;
+                        document.getElementById('productFileId').value = result.data.fileId;
+                        progFill.style.width = '100%'; progText.textContent = '100%';
+                        setTimeout(() => { progBar.style.display = 'none'; }, 1000);
+                        resolve(result.data);
+                    } else throw new Error(result.message || 'Upload failed');
+                } catch(err) {
+                    if (retry < 2) { showToast('Upload failed, retrying...', 'warning'); setTimeout(() => uploadImageToDrive(file, retry+1).then(resolve).catch(reject), 2000); }
+                    else { progBar.style.display = 'none'; reject(err); }
+                }
+            };
+            let p = 0; const interval = setInterval(() => { p += 10; if(p <= 90) { progFill.style.width = p+'%'; progText.textContent = p+'%'; } else clearInterval(interval); }, 200);
+        });
+    }
+    
+    function removeImage() {
+        document.getElementById('imagePreview').src = '';
+        document.getElementById('imagePreviewContainer').style.display = 'none';
+        document.getElementById('productImageLink').value = '';
+        document.getElementById('productFileId').value = '';
+        document.getElementById('fileInput').value = '';
+        uploadedImageUrl = ''; uploadedFileId = '';
+    }
+    
+    // Category dropdown handler
+    function initCategoryHandlers() {
+        const select = document.getElementById('productCategorySelect');
+        const customContainer = document.getElementById('categoryCustomContainer');
+        const customInput = document.getElementById('productCategoryCustom');
+        const hiddenCat = document.getElementById('productCategory');
+        if (!select) return;
+        select.addEventListener('change', () => {
+            if (select.value === 'other') {
+                customContainer.style.display = 'block';
+                customInput.required = true;
+                hiddenCat.value = '';
+            } else {
+                customContainer.style.display = 'none';
+                customInput.required = false;
+                hiddenCat.value = select.value;
+                customInput.value = '';
+            }
+        });
+        customInput.addEventListener('input', () => { hiddenCat.value = customInput.value.trim(); });
+    }
+    
+    // Render functions
+    function renderCatalogTable() {
+        const tbody = document.getElementById('catalogTable');
+        if (!currentData.catalog.length) { tbody.innerHTML = `<tr><td colspan="6" class="empty-state"><i class="fas fa-box-open"></i><p>No products found.</p></td></tr>`; return; }
+        tbody.innerHTML = currentData.catalog.map(p => `<tr><td>${p.thumbnailUrl ? `<img src="${p.thumbnailUrl}" class="product-image-preview" onclick="event.stopPropagation()" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIGZpbGw9IiNlMGU3ZWIiIHJ4PSI2Ii8+PHBhdGggZD0iTTIwIDIwTDMwIDMwTDM1IDI1TDM1IDQwSDI1VjMwTDIwIDI1VjIwWk0yMCAxNUMxOC4zNDQxIDE1IDE3IDE2LjM0NDEgMTcgMThDMTcgMTkuNjU1OSAxOC4zNDQxIDIxIDIwIDIxQzIxLjY1NTkgMjEgMjMgMTkuNjU1OSAyMyAxOEMyMyAxNi4zNDQxIDIxLjY1NTkgMTUgMjAgMTVaIiBmaWxsPSIjOTM5NDk4Ii8+PC9zdmc+Cg==';">` : '<img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIGZpbGw9IiNlMGU3ZWIiIHJ4PSI2Ii8+PHBhdGggZD0iTTIwIDIwTDMwIDMwTDM1IDI1TDM1IDQwSDI1VjMwTDIwIDI1VjIwWk0yMCAxNUMxOC4zNDQxIDE1IDE3IDE2LjM0NDEgMTcgMThDMTcgMTkuNjU1OSAxOC4zNDQxIDIxIDIwIDIxQzIxLjY1NTkgMjEgMjMgMTkuNjU1OSAyMyAxOEMyMyAxNi4zNDQxIDIxLjY1NTkgMTUgMjAgMTVaIiBmaWxsPSIjOTM5NDk4Ii8+PC9zdmc+Cg==" class="product-image-preview">'}</td><td><strong>${escapeHtml(p.product)}</strong><br><small>${escapeHtml(p.description?.substring(0,50))}${p.description?.length>50?'...':''}</small></td><td><code>${escapeHtml(p.sku)}</code></td><td>$${parseFloat(p.price).toFixed(2)}</td><td>${escapeHtml(p.category)}</td><td><div class="action-buttons"><button class="action-btn edit-btn" onclick="openProductModalForEdit(${JSON.stringify(p).replace(/"/g, '&quot;')})"><i class="fas fa-edit"></i> Edit</button><button class="action-btn delete-btn" onclick="deleteProduct('${p.sku}')"><i class="fas fa-trash"></i> Delete</button></div></td></tr>`).join('');
+        document.querySelectorAll('#catalogTable tr').forEach(row => row.addEventListener('click', (e) => { if(!e.target.closest('.action-btn')) addRowLoading(row); }));
+    }
+    
+    window.openProductModalForEdit = (product) => { openProductModal(product); };
+    
+    function renderChatsTable() { /* similar to original but condensed */ const tbody = document.getElementById('chatsTable'); if(!currentData.chats.length){ tbody.innerHTML='<tr><td colspan="5" class="empty-state">No chats</td></tr>'; return; } tbody.innerHTML = currentData.chats.map(c => `<tr><td><strong>${escapeHtml(c.phone)}</strong></td><td>${escapeHtml(c.lastMessage?.substring(0,50))}</td><td>${c.messageCount}</td><td>${c.lastTimestamp ? new Date(c.lastTimestamp).toLocaleDateString() : 'N/A'}</td><td><div class="action-buttons"><button class="action-btn view-btn" onclick="openChatThread('${c.phone}')">View</button>${cleanPhoneNumber(c.phone) ? `<a href="https://wa.me/${cleanPhoneNumber(c.phone)}?text=${encodeURIComponent('Hi this is Ultra Clean Car Wash...')}" target="_blank" class="action-btn whatsapp-btn">Chat</a>` : ''}</div></td></tr>`).join(''); }
+    function renderFaqTable() { const tbody = document.getElementById('faqTable'); if(!currentData.faq.length){ tbody.innerHTML='<tr><td colspan="3" class="empty-state">No FAQs</td></tr>'; return; } tbody.innerHTML = currentData.faq.map(f => `<tr><td>${escapeHtml(f.question)}</td><td><code>${escapeHtml(f.sku)}</code></td><td><div class="action-buttons"><button class="action-btn edit-btn" onclick="openFaqModalForEdit(${JSON.stringify(f).replace(/"/g, '&quot;')})">Edit</button><button class="action-btn delete-btn" onclick="deleteFaq('${f.sku}')">Delete</button></div></td></tr>`).join(''); }
+    function renderOrdersTable() { let orders = currentOrderFilter === 'pending' ? currentData.pendingOrders : currentOrderFilter === 'processing' ? currentData.processingOrders : currentData.completedOrders; const tbody = document.getElementById('ordersTable'); if(!orders.length){ tbody.innerHTML=`<tr><td colspan="6" class="empty-state">No ${currentOrderFilter} orders</td></tr>`; return; } tbody.innerHTML = orders.map(o => `<tr><td>${o.thumbnailUrl ? `<img src="${o.thumbnailUrl}" class="order-image-preview" onclick="event.stopPropagation()">` : '<img src="data:image/svg+xml;base64,..." class="order-image-preview">'}</td><td><strong>${escapeHtml(o.orderNumber)}</strong></td><td>${escapeHtml(o.phone)}</td><td>${o.dateTime ? new Date(o.dateTime).toLocaleDateString() : 'N/A'}</td><td><span class="status-badge status-${o.status === 'Processing' ? 'processing' : o.status === 'Completed' ? 'completed' : 'pending'}">${o.status}</span></td><td><div class="action-buttons"><button class="action-btn view-btn" onclick="openOrderDetails('${o.orderNumber}')">View</button></div></td></tr>`).join(''); }
+    function renderRecentOrders(orders) { const tbody = document.getElementById('recentOrders'); if(!orders.length){ tbody.innerHTML='<tr><td colspan="5" class="empty-state">No recent orders</td></tr>'; return; } tbody.innerHTML = orders.map(o => `<tr><td><strong>${escapeHtml(o.orderNumber)}</strong></td><td>${escapeHtml(o.phone)}</td><td>${o.dateTime ? new Date(o.dateTime).toLocaleDateString() : 'N/A'}</td><td><span class="status-badge status-${o.status === 'Processing' ? 'processing' : o.status === 'Completed' ? 'completed' : 'pending'}">${o.status}</span></td><td><button class="action-btn view-btn" onclick="openOrderDetails('${o.orderNumber}')">View</button></td></tr>`).join(''); }
+    
+    async function loadDashboardData() { showLoading('dashboard'); const [cat, chats, faq, ord] = await Promise.all([fetchData('getcatalog'), fetchData('getchats'), fetchData('getfaq'), fetchData('getorders')]); if(cat?.success) { currentData.catalog = cat.catalog || []; document.getElementById('catalogCount').textContent = currentData.catalog.length; } if(chats?.success) { currentData.chats = chats.chats || []; document.getElementById('chatsCount').textContent = currentData.chats.length; } if(faq?.success) { currentData.faq = faq.faqs || []; document.getElementById('faqCount').textContent = currentData.faq.length; } if(ord?.success) { currentData.orders = ord.orders || []; currentData.pendingOrders = ord.pending || []; currentData.processingOrders = ord.processing || []; currentData.completedOrders = ord.completed || []; document.getElementById('ordersCount').textContent = ord.pending?.length || 0; renderRecentOrders(ord.pending?.slice(0,5)||[]); } hideLoading('dashboard'); await populateCategoryDropdown(); }
+    async function loadSectionData(section) { showLoading(section); if(section === 'catalog'){ const r = await fetchData('getcatalog'); if(r?.success){ currentData.catalog = r.catalog || []; renderCatalogTable(); } } else if(section === 'chats'){ const r = await fetchData('getchats'); if(r?.success){ currentData.chats = r.chats || []; renderChatsTable(); } } else if(section === 'faq'){ const r = await fetchData('getfaq'); if(r?.success){ currentData.faq = r.faqs || []; renderFaqTable(); } } else if(section === 'orders'){ const r = await fetchData('getorders'); if(r?.success){ currentData.orders = r.orders || []; currentData.pendingOrders = r.pending || []; currentData.processingOrders = r.processing || []; currentData.completedOrders = r.completed || []; renderOrdersTable(); } } hideLoading(section); }
+    
+    async function openProductModal(product = null) {
+        await populateCategoryDropdown();
+        const modal = document.getElementById('productModal');
+        document.getElementById('productForm').reset(); removeImage(); uploadedImageUrl = ''; uploadedFileId = '';
+        document.getElementById('uploadProgress').style.display = 'none';
+        document.getElementById('imagePreviewContainer').style.display = 'none';
+        document.getElementById('categoryCustomContainer').style.display = 'none';
+        document.getElementById('productCategorySelect').value = '';
+        document.getElementById('productCategoryCustom').value = '';
+        document.getElementById('productCategory').value = '';
+        if(product && product.sku) {
+            document.getElementById('productModalTitle').innerText = 'Edit Product';
+            document.getElementById('productSubmitText').innerText = 'Update Product';
+            document.getElementById('productName').value = product.product || '';
+            document.getElementById('productPrice').value = product.price || '';
+            document.getElementById('productSkuInput').value = product.sku;
+            document.getElementById('productSku').value = product.sku;
+            document.getElementById('productDescription').value = product.description || '';
+            if(product.category) {
+                if(categoryList.includes(product.category)) document.getElementById('productCategorySelect').value = product.category;
+                else { document.getElementById('productCategorySelect').value = 'other'; document.getElementById('categoryCustomContainer').style.display = 'block'; document.getElementById('productCategoryCustom').value = product.category; document.getElementById('productCategory').value = product.category; }
+            }
+            if(product.originalImageLink || product.imageLink) { const url = product.imageLink || ''; document.getElementById('productImageLink').value = url; uploadedImageUrl = url; document.getElementById('imagePreview').src = product.thumbnailUrl || url; document.getElementById('imagePreviewContainer').style.display = 'block'; }
+        } else {
+            document.getElementById('productModalTitle').innerText = 'Add Product';
+            document.getElementById('productSubmitText').innerText = 'Add Product';
+            document.getElementById('productSku').value = '';
+        }
+        modal.classList.add('active');
+    }
+    
+    async function handleProductSubmit(e) {
+        e.preventDefault();
+        const isEdit = !!document.getElementById('productSku').value;
+        if (!isEdit && !uploadedImageUrl) { showToast('Please upload a product image', 'error'); return; }
+        let category = document.getElementById('productCategory').value;
+        if (!category) category = document.getElementById('productCategorySelect').value;
+        if (!category || category === 'other') { showToast('Please select or enter a category', 'error'); return; }
+        const product = {
+            product: document.getElementById('productName').value,
+            price: document.getElementById('productPrice').value,
+            sku: document.getElementById('productSkuInput').value || undefined,
+            description: document.getElementById('productDescription').value,
+            imageLink: uploadedImageUrl,
+            category: category
+        };
+        if (!product.product) { showToast('Product name required', 'error'); return; }
+        const action = isEdit ? 'edcatalogitem' : 'adcatalogitem';
+        try {
+            const btn = e.target.querySelector('button[type="submit"]');
+            const orig = btn.innerHTML; btn.innerHTML = '<div class="loading"></div>'; btn.disabled = true;
+            const result = await fetchData(action, product);
+            if(result?.success) { showToast(result.message || 'Success', 'success'); closeModal('productModal'); loadSectionData('catalog'); loadDashboardData(); await populateCategoryDropdown(); }
+            else showToast(result?.message || result?.error || 'Failed', 'error');
+            btn.innerHTML = orig; btn.disabled = false;
+        } catch(err) { showToast('Error: '+err.message, 'error'); }
+    }
+    
+    async function deleteProduct(sku) { if(!confirm('Delete product?')) return; const r = await fetchData('delcatalogitem', { sku }); if(r?.success){ showToast('Deleted','success'); loadSectionData('catalog'); loadDashboardData(); await populateCategoryDropdown(); } else showToast(r?.message || 'Delete failed','error'); }
+    async function deleteFaq(sku) { if(!confirm('Delete FAQ?')) return; const r = await fetchData('delfaq', { sku }); if(r?.success){ showToast('Deleted','success'); loadSectionData('faq'); loadDashboardData(); } else showToast(r?.message || 'Delete failed','error'); }
+    function openFaqModal(faq=null){ const modal = document.getElementById('faqModal'); if(faq?.sku){ document.getElementById('faqModalTitle').innerText='Edit FAQ'; document.getElementById('faqSubmitText').innerText='Update FAQ'; document.getElementById('faqQuestion').value=faq.question||''; document.getElementById('faqSkuInput').value=faq.sku; document.getElementById('faqSku').value=faq.sku; document.getElementById('faqSkuInput').readOnly=true; } else { document.getElementById('faqModalTitle').innerText='Add FAQ'; document.getElementById('faqSubmitText').innerText='Add FAQ'; document.getElementById('faqForm').reset(); document.getElementById('faqSku').value=''; document.getElementById('faqSkuInput').readOnly=false; } modal.classList.add('active'); }
+    async function handleFaqSubmit(e){ e.preventDefault(); const faq={ question: document.getElementById('faqQuestion').value, sku: document.getElementById('faqSkuInput').value||undefined }; if(!faq.question){ showToast('Question required','error'); return; } const isEdit=!!document.getElementById('faqSku').value; const action=isEdit?'edfaq':'adfaq'; try{ const btn=e.target.querySelector('button[type="submit"]'); const orig=btn.innerHTML; btn.innerHTML='<div class="loading"></div>'; btn.disabled=true; const r=await fetchData(action,faq); if(r?.success){ showToast(r.message||'Success','success'); closeModal('faqModal'); loadSectionData('faq'); loadDashboardData(); } else showToast(r?.message||'Failed','error'); btn.innerHTML=orig; btn.disabled=false; } catch(err){ showToast('Error','error'); } }
+    async function openChatThread(phone){ const res=await fetchData('getchatthread',{phone}); if(res?.success){ document.getElementById('chatPhoneNumber').innerText=phone; currentChatPhone=phone; const container=document.getElementById('chatThread'); container.innerHTML=(res.messages||[]).map(m=>`<div class="chat-message ${m.bot?'bot':'user'}"><div class="chat-bubble">${m.bot||m.message}<div class="chat-time">${new Date(m.timestamp).toLocaleString()}</div></div></div>`).join(''); document.getElementById('chatThreadModal').classList.add('active'); } else showToast('Error loading chat','error'); }
+    function sendFollowUpMessage(){ const msg=document.getElementById('whatsappMessage').value.trim(); if(!msg) return; const phone=cleanPhoneNumber(currentChatPhone); if(phone) window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,'_blank'); }
+    async function openOrderDetails(orderNumber){ let order=currentData.orders.find(o=>o.orderNumber===orderNumber); if(!order){ const r=await fetchData('getorders'); if(r?.success){ currentData.orders=r.orders||[]; order=currentData.orders.find(o=>o.orderNumber===orderNumber); } } if(!order){ showToast('Order not found','error'); return; } currentOrder=order; document.getElementById('orderNumberTitle').innerText=orderNumber; document.getElementById('orderNumberDetail').innerText=order.orderNumber; document.getElementById('orderPhone').innerText=order.phone||''; document.getElementById('orderDateTime').innerText=order.dateTime?new Date(order.dateTime).toLocaleString():'N/A'; document.getElementById('orderDescription').innerText=order.description||'No description'; const badge=document.getElementById('orderStatusBadge'); badge.innerText=order.status||'Pending'; badge.className=`status-badge status-${order.status==='Processing'?'processing':order.status==='Completed'?'completed':'pending'}`; const img=document.getElementById('orderImage'); const noImg=document.getElementById('noOrderImage'); if(order.image){ img.src=order.image; img.style.display='block'; noImg.style.display='none'; } else { img.style.display='none'; noImg.style.display='block'; } let defMsg=''; if(order.status==='Processing') defMsg=`Hi, your order ${order.orderNumber} is being processed...`; else if(order.status==='Completed') defMsg=`Good news! Order ${order.orderNumber} is ready for collection.`; else defMsg=`Hi, your order ${order.orderNumber} has been received.`; document.getElementById('orderWhatsappMessage').value=defMsg; const actionsDiv=document.getElementById('orderActions'); actionsDiv.innerHTML=''; if(order.status!=='Completed'){ if(order.status!=='Processing'){ const pb=document.createElement('button'); pb.className='btn btn-warning'; pb.innerHTML='<i class="fas fa-cog"></i> Mark Processing'; pb.onclick=()=>processOrder(order.orderNumber); actionsDiv.appendChild(pb); } const cb=document.createElement('button'); cb.className='btn btn-success'; cb.innerHTML='<i class="fas fa-check-circle"></i> Complete Order'; cb.onclick=()=>completeOrder(order.orderNumber); actionsDiv.appendChild(cb); } document.getElementById('orderDetailsModal').classList.add('active'); }
+    async function processOrder(orderNumber){ const r=await fetchData('processorder',{orderNumber}); if(r?.success){ showToast('Order marked processing','success'); closeModal('orderDetailsModal'); loadSectionData('orders'); loadDashboardData(); } else showToast(r?.message||'Failed','error'); }
+    async function completeOrder(orderNumber){ const r=await fetchData('completeorder',{orderNumber}); if(r?.success){ showToast('Order completed','success'); closeModal('orderDetailsModal'); loadSectionData('orders'); loadDashboardData(); } else showToast(r?.message||'Failed','error'); }
+    function sendOrderWhatsApp(){ const msg=document.getElementById('orderWhatsappMessage').value.trim(); const phone=cleanPhoneNumber(currentOrder?.phone); if(phone && msg) window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,'_blank'); }
+    function exportPhoneNumbers(){ window.open(`${WEB_APP_URL}?action=exportnumbers`,'_blank'); showToast('Export started','success'); }
+    function closeModal(id){ document.getElementById(id).classList.remove('active'); if(id==='productModal'){ document.getElementById('categoryCustomContainer').style.display='none'; } currentOrder=null; }
+    function switchTab(tabId){ document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active')); document.querySelector(`.nav-tab[data-tab="${tabId}"]`).classList.add('active'); document.querySelectorAll('.content-section').forEach(s=>s.classList.remove('active')); document.getElementById(tabId).classList.add('active'); if(tabId!=='dashboard') loadSectionData(tabId); }
+    
+    document.addEventListener('DOMContentLoaded', async () => {
+        document.getElementById('mobileMenuToggle').onclick = () => { document.getElementById('mobileMenu').classList.add('active'); document.getElementById('mobileMenuOverlay').classList.add('active'); };
+        document.getElementById('closeMobileMenu').onclick = () => { document.getElementById('mobileMenu').classList.remove('active'); document.getElementById('mobileMenuOverlay').classList.remove('active'); };
+        document.getElementById('mobileMenuOverlay').onclick = () => { document.getElementById('mobileMenu').classList.remove('active'); document.getElementById('mobileMenuOverlay').classList.remove('active'); };
+        document.querySelectorAll('.mobile-menu-item').forEach(i=>i.addEventListener('click',()=>{ const t=i.getAttribute('data-tab'); switchTab(t); document.getElementById('mobileMenu').classList.remove('active'); document.getElementById('mobileMenuOverlay').classList.remove('active'); }));
+        document.querySelectorAll('.stat-card').forEach(c=>c.addEventListener('click',()=>{ const t=c.getAttribute('data-tab'); if(t) switchTab(t); }));
+        document.querySelectorAll('.nav-tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.getAttribute('data-tab'))));
+        document.getElementById('refreshBtn').onclick = () => { const active = document.querySelector('.nav-tab.active').getAttribute('data-tab'); loadSectionData(active); loadDashboardData(); showToast('Refreshed','success'); };
+        document.getElementById('addProductBtn').onclick = () => openProductModal();
+        document.getElementById('closeProductModal').onclick = () => closeModal('productModal');
+        document.getElementById('productForm').addEventListener('submit', handleProductSubmit);
+        document.getElementById('removeImageBtn').onclick = removeImage;
+        document.getElementById('fileUploadContainer').onclick = () => document.getElementById('fileInput').click();
+        document.getElementById('fileInput').addEventListener('change', async (e) => { if(e.target.files[0]){ const preview = document.getElementById('imagePreview'); preview.src = URL.createObjectURL(e.target.files[0]); document.getElementById('imagePreviewContainer').style.display = 'block'; await uploadImageToDrive(e.target.files[0]); } });
+        document.getElementById('addFaqBtn').onclick = () => openFaqModal();
+        document.getElementById('closeFaqModal').onclick = () => closeModal('faqModal');
+        document.getElementById('faqForm').addEventListener('submit', handleFaqSubmit);
+        document.getElementById('exportNumbersBtn').onclick = exportPhoneNumbers;
+        document.getElementById('closeChatModal').onclick = () => closeModal('chatThreadModal');
+        document.getElementById('sendFollowUpBtn').onclick = sendFollowUpMessage;
+        document.getElementById('showPendingBtn').onclick = () => { currentOrderFilter='pending'; renderOrdersTable(); };
+        document.getElementById('showProcessingBtn').onclick = () => { currentOrderFilter='processing'; renderOrdersTable(); };
+        document.getElementById('showCompletedBtn').onclick = () => { currentOrderFilter='completed'; renderOrdersTable(); };
+        document.getElementById('closeOrderModal').onclick = () => closeModal('orderDetailsModal');
+        document.getElementById('sendOrderWhatsAppBtn').onclick = sendOrderWhatsApp;
+        document.querySelectorAll('#chatThreadModal .whatsapp-template-btn').forEach(b=>b.addEventListener('click',()=>{ const t=b.getAttribute('data-template'); const ta=document.getElementById('whatsappMessage'); if(t==='general') ta.value='Hi this is Ultra Clean Car Wash...'; else if(t==='followup') ta.value='Hello, this is Tari from Ultra Clean Car Wash...'; else if(t==='feedback') ta.value='We value your feedback...'; else if(t==='custom') ta.value='Hello, Im reaching out...'; }));
+        document.querySelectorAll('#orderDetailsModal .whatsapp-template-btn').forEach(b=>b.addEventListener('click',()=>{ const t=b.getAttribute('data-template'); const ta=document.getElementById('orderWhatsappMessage'); const on=currentOrder?.orderNumber||''; if(t==='processing') ta.value=`Hi, order ${on} is being processed...`; else if(t==='ready') ta.value=`Order ${on} is ready for collection!`; else if(t==='delivery') ta.value=`Order ${on} is ready. Would you prefer delivery?`; else if(t==='custom') ta.value=`Regarding order ${on}, `; }));
+        initCategoryHandlers();
+        await loadDashboardData();
+        if(window.location.hash) switchTab(window.location.hash.substring(1));
+        if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(e=>console.log(e));
+        if('BeforeInstallPromptEvent' in window){ window.addEventListener('beforeinstallprompt',(e)=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installPrompt').classList.add('show'); }); }
+        document.getElementById('installBtn').onclick = () => { if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ document.getElementById('installPrompt').classList.remove('show'); deferredPrompt=null; }); } };
+    });
+    window.openProductModal = openProductModal; window.openFaqModalForEdit = (f)=>openFaqModal(f); window.deleteProduct = deleteProduct; window.deleteFaq = deleteFaq; window.openChatThread = openChatThread; window.openOrderDetails = openOrderDetails;
+</script>
+</body>
+</html>
