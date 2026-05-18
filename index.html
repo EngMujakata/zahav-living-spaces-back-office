@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Chatbot Dashboard - Ultra Clean Car Wash</title>
+    <title>Chatbot Dashboard - Zahav Living Spaces</title>
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -1301,7 +1301,7 @@
         <div class="mobile-menu-header">
             <i class="fas fa-robot"></i>
             <div>
-                <h3>Ultra Clean Car Wash</h3>
+                <h3>Zahav Living Spaces</h3>
                 <small>Chatbot Dashboard</small>
             </div>
             <button class="mobile-menu-close" id="closeMobileMenu">&times;</button>
@@ -1321,14 +1321,14 @@
                 <div class="logo">
                     <div class="mobile-menu-toggle" id="mobileMenuToggle"><i class="fas fa-bars"></i></div>
                     <div class="logo-icon"><i class="fas fa-robot"></i></div>
-                    <div><h1>Chatbot Dashboard</h1><span>Ultra Clean Car Wash</span></div>
+                    <div><h1>Chatbot Dashboard</h1><span>Zahav Living Spaces</span></div>
                 </div>
                 <div><button class="btn btn-secondary" id="refreshBtn"><i class="fas fa-sync-alt"></i> Refresh</button></div>
             </div>
         </header>
         
         <div class="pwa-install" id="installPrompt">
-            <div class="pwa-install-content"><div class="pwa-install-icon"><i class="fas fa-robot"></i></div><div class="pwa-install-text"><h3>Install Ultra Clean Car Wash Dashboard</h3><p>Install this app on your device for quick access</p></div></div>
+            <div class="pwa-install-content"><div class="pwa-install-icon"><i class="fas fa-robot"></i></div><div class="pwa-install-text"><h3>Install Zahav Living Spaces Dashboard</h3><p>Install this app on your device for quick access</p></div></div>
             <button class="btn" id="installBtn">Install Now</button>
         </div>
         
@@ -1418,14 +1418,14 @@
     <div class="modal" id="faqModal"><div class="modal-content"><div class="modal-header"><h3 id="faqModalTitle">Add FAQ</h3><button class="modal-close" id="closeFaqModal">&times;</button></div><div class="modal-body"><form id="faqForm"><input type="hidden" id="faqSku" name="sku"><div class="form-group"><label for="faqQuestion">Question *</label><textarea id="faqQuestion" class="form-control" rows="3" required></textarea></div><div class="form-group"><label for="faqSkuInput">SKU (leave blank for auto-generate)</label><input type="text" id="faqSkuInput" class="form-control"></div><div class="form-group"><button type="submit" class="btn btn-primary"><span id="faqSubmitText">Add FAQ</span></button></div></form></div></div></div>
     
     <!-- Chat Thread Modal -->
-    <div class="modal" id="chatThreadModal"><div class="modal-content"><div class="modal-header"><h3>Chat with <span id="chatPhoneNumber"></span></h3><button class="modal-close" id="closeChatModal">&times;</button></div><div class="modal-body"><div class="chat-thread" id="chatThread"></div><div class="whatsapp-followup"><h4><i class="fab fa-whatsapp"></i> Send WhatsApp Follow-up</h4><div class="whatsapp-templates"><button class="whatsapp-template-btn" data-template="general">General</button><button class="whatsapp-template-btn" data-template="followup">Follow-up</button><button class="whatsapp-template-btn" data-template="feedback">Feedback</button><button class="whatsapp-template-btn" data-template="custom">Custom</button></div><textarea id="whatsappMessage" class="whatsapp-message-input">Hi this is Ultra Clean Car Wash, reaching out based on an enquiry you made on our chatbot. How can we assist you further?</textarea><button class="btn btn-whatsapp" id="sendFollowUpBtn">Send on WhatsApp</button></div></div></div></div>
+    <div class="modal" id="chatThreadModal"><div class="modal-content"><div class="modal-header"><h3>Chat with <span id="chatPhoneNumber"></span></h3><button class="modal-close" id="closeChatModal">&times;</button></div><div class="modal-body"><div class="chat-thread" id="chatThread"></div><div class="whatsapp-followup"><h4><i class="fab fa-whatsapp"></i> Send WhatsApp Follow-up</h4><div class="whatsapp-templates"><button class="whatsapp-template-btn" data-template="general">General</button><button class="whatsapp-template-btn" data-template="followup">Follow-up</button><button class="whatsapp-template-btn" data-template="feedback">Feedback</button><button class="whatsapp-template-btn" data-template="custom">Custom</button></div><textarea id="whatsappMessage" class="whatsapp-message-input">Hi this is Zahav Living Spaces, reaching out based on an enquiry you made on our chatbot. How can we assist you further?</textarea><button class="btn btn-whatsapp" id="sendFollowUpBtn">Send on WhatsApp</button></div></div></div></div>
     
     <!-- Order Details Modal -->
     <div class="modal" id="orderDetailsModal"><div class="modal-content"><div class="modal-header"><h3>Order Details: <span id="orderNumberTitle"></span></h3><button class="modal-close" id="closeOrderModal">&times;</button></div><div class="modal-body"><div class="order-details"><div class="order-image-large"><img id="orderImage" src="" style="display: none;"><div id="noOrderImage" style="padding: 2rem; text-align: center;"><i class="fas fa-image"></i><p>No image available</p></div></div><div><div class="order-info-group"><div class="order-info-label">Order Number</div><div class="order-info-value" id="orderNumberDetail"></div></div><div class="order-info-group"><div class="order-info-label">Customer Phone</div><div class="order-info-value" id="orderPhone"></div></div><div class="order-info-group"><div class="order-info-label">Date & Time</div><div class="order-info-value" id="orderDateTime"></div></div><div class="order-info-group"><div class="order-info-label">Status</div><div class="order-info-value"><span class="status-badge" id="orderStatusBadge"></span></div></div><div class="order-info-group"><div class="order-info-label">Description</div><div class="order-info-value" id="orderDescription"></div></div><div class="whatsapp-followup"><h4><i class="fab fa-whatsapp"></i> Notify Customer on WhatsApp</h4><div class="whatsapp-templates"><button class="whatsapp-template-btn" data-template="processing">Processing</button><button class="whatsapp-template-btn" data-template="ready">Ready</button><button class="whatsapp-template-btn" data-template="delivery">Delivery</button><button class="whatsapp-template-btn" data-template="custom">Custom</button></div><textarea id="orderWhatsappMessage" class="whatsapp-message-input"></textarea><div class="order-actions" id="orderActions"></div><button class="btn btn-whatsapp" id="sendOrderWhatsAppBtn">Send WhatsApp Notification</button></div></div></div></div></div></div>
     
 <script>
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxLNnFUmPf6sJwPiTcY8B13Tg4sbiEx-ABYC62Lz7ZzW8JVa4mdkAOeqWa49QiNdzALng/exec';
-    const DRIVE_FOLDER_ID = '1PWBXrNY2X5e0D2a2IOnURP41SBjEOcCu';
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz5poniGjcWOisVdk9PtNvHLIs5iuyWVeiafzjfhS_-SbRSEmEtQVpUKQ-1QqT9OCqY/exec';
+    const DRIVE_FOLDER_ID = '12CoxFUZNLv8JF3VqdioFvUnDqDczBiG2';
     
     let currentData = { catalog: [], chats: [], faq: [], orders: [], pendingOrders: [], processingOrders: [], completedOrders: [], users: [] };
     let currentModal = null, currentOrderFilter = 'pending', currentChatPhone = '', currentOrder = null, uploadedImageUrl = '', uploadedFileId = '';
@@ -1567,7 +1567,7 @@
     
     window.openProductModalForEdit = (product) => { openProductModal(product); };
     
-    function renderChatsTable() { /* similar to original but condensed */ const tbody = document.getElementById('chatsTable'); if(!currentData.chats.length){ tbody.innerHTML='<tr><td colspan="5" class="empty-state">No chats</td></tr>'; return; } tbody.innerHTML = currentData.chats.map(c => `<tr><td><strong>${escapeHtml(c.phone)}</strong></td><td>${escapeHtml(c.lastMessage?.substring(0,50))}</td><td>${c.messageCount}</td><td>${c.lastTimestamp ? new Date(c.lastTimestamp).toLocaleDateString() : 'N/A'}</td><td><div class="action-buttons"><button class="action-btn view-btn" onclick="openChatThread('${c.phone}')">View</button>${cleanPhoneNumber(c.phone) ? `<a href="https://wa.me/${cleanPhoneNumber(c.phone)}?text=${encodeURIComponent('Hi this is Ultra Clean Car Wash...')}" target="_blank" class="action-btn whatsapp-btn">Chat</a>` : ''}</div></td></tr>`).join(''); }
+    function renderChatsTable() { /* similar to original but condensed */ const tbody = document.getElementById('chatsTable'); if(!currentData.chats.length){ tbody.innerHTML='<tr><td colspan="5" class="empty-state">No chats</td></tr>'; return; } tbody.innerHTML = currentData.chats.map(c => `<tr><td><strong>${escapeHtml(c.phone)}</strong></td><td>${escapeHtml(c.lastMessage?.substring(0,50))}</td><td>${c.messageCount}</td><td>${c.lastTimestamp ? new Date(c.lastTimestamp).toLocaleDateString() : 'N/A'}</td><td><div class="action-buttons"><button class="action-btn view-btn" onclick="openChatThread('${c.phone}')">View</button>${cleanPhoneNumber(c.phone) ? `<a href="https://wa.me/${cleanPhoneNumber(c.phone)}?text=${encodeURIComponent('Hi this is Zahav Living Spaces...')}" target="_blank" class="action-btn whatsapp-btn">Chat</a>` : ''}</div></td></tr>`).join(''); }
     function renderFaqTable() { const tbody = document.getElementById('faqTable'); if(!currentData.faq.length){ tbody.innerHTML='<tr><td colspan="3" class="empty-state">No FAQs</td></tr>'; return; } tbody.innerHTML = currentData.faq.map(f => `<tr><td>${escapeHtml(f.question)}</td><td><code>${escapeHtml(f.sku)}</code></td><td><div class="action-buttons"><button class="action-btn edit-btn" onclick="openFaqModalForEdit(${JSON.stringify(f).replace(/"/g, '&quot;')})">Edit</button><button class="action-btn delete-btn" onclick="deleteFaq('${f.sku}')">Delete</button></div></td></tr>`).join(''); }
     function renderOrdersTable() { let orders = currentOrderFilter === 'pending' ? currentData.pendingOrders : currentOrderFilter === 'processing' ? currentData.processingOrders : currentData.completedOrders; const tbody = document.getElementById('ordersTable'); if(!orders.length){ tbody.innerHTML=`<tr><td colspan="6" class="empty-state">No ${currentOrderFilter} orders</td></tr>`; return; } tbody.innerHTML = orders.map(o => `<tr><td>${o.thumbnailUrl ? `<img src="${o.thumbnailUrl}" class="order-image-preview" onclick="event.stopPropagation()">` : '<img src="data:image/svg+xml;base64,..." class="order-image-preview">'}</td><td><strong>${escapeHtml(o.orderNumber)}</strong></td><td>${escapeHtml(o.phone)}</td><td>${o.dateTime ? new Date(o.dateTime).toLocaleDateString() : 'N/A'}</td><td><span class="status-badge status-${o.status === 'Processing' ? 'processing' : o.status === 'Completed' ? 'completed' : 'pending'}">${o.status}</span></td><td><div class="action-buttons"><button class="action-btn view-btn" onclick="openOrderDetails('${o.orderNumber}')">View</button></div></td></tr>`).join(''); }
     function renderRecentOrders(orders) { const tbody = document.getElementById('recentOrders'); if(!orders.length){ tbody.innerHTML='<tr><td colspan="5" class="empty-state">No recent orders</td></tr>'; return; } tbody.innerHTML = orders.map(o => `<tr><td><strong>${escapeHtml(o.orderNumber)}</strong></td><td>${escapeHtml(o.phone)}</td><td>${o.dateTime ? new Date(o.dateTime).toLocaleDateString() : 'N/A'}</td><td><span class="status-badge status-${o.status === 'Processing' ? 'processing' : o.status === 'Completed' ? 'completed' : 'pending'}">${o.status}</span></td><td><button class="action-btn view-btn" onclick="openOrderDetails('${o.orderNumber}')">View</button></td></tr>`).join(''); }
@@ -1672,7 +1672,7 @@
         document.getElementById('showCompletedBtn').onclick = () => { currentOrderFilter='completed'; renderOrdersTable(); };
         document.getElementById('closeOrderModal').onclick = () => closeModal('orderDetailsModal');
         document.getElementById('sendOrderWhatsAppBtn').onclick = sendOrderWhatsApp;
-        document.querySelectorAll('#chatThreadModal .whatsapp-template-btn').forEach(b=>b.addEventListener('click',()=>{ const t=b.getAttribute('data-template'); const ta=document.getElementById('whatsappMessage'); if(t==='general') ta.value='Hi this is Ultra Clean Car Wash...'; else if(t==='followup') ta.value='Hello, this is Tari from Ultra Clean Car Wash...'; else if(t==='feedback') ta.value='We value your feedback...'; else if(t==='custom') ta.value='Hello, Im reaching out...'; }));
+        document.querySelectorAll('#chatThreadModal .whatsapp-template-btn').forEach(b=>b.addEventListener('click',()=>{ const t=b.getAttribute('data-template'); const ta=document.getElementById('whatsappMessage'); if(t==='general') ta.value='Hi this is Zahav Living Spaces...'; else if(t==='followup') ta.value='Hello, this is Tari from Zahav Living Spaces...'; else if(t==='feedback') ta.value='We value your feedback...'; else if(t==='custom') ta.value='Hello, Im reaching out...'; }));
         document.querySelectorAll('#orderDetailsModal .whatsapp-template-btn').forEach(b=>b.addEventListener('click',()=>{ const t=b.getAttribute('data-template'); const ta=document.getElementById('orderWhatsappMessage'); const on=currentOrder?.orderNumber||''; if(t==='processing') ta.value=`Hi, order ${on} is being processed...`; else if(t==='ready') ta.value=`Order ${on} is ready for collection!`; else if(t==='delivery') ta.value=`Order ${on} is ready. Would you prefer delivery?`; else if(t==='custom') ta.value=`Regarding order ${on}, `; }));
         initCategoryHandlers();
         await loadDashboardData();
